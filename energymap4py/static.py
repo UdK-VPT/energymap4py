@@ -9,8 +9,8 @@ test_line = [(13.324412829321979, 52.516957033745285),(13.322429034685205, 52.51
 test_poly = [(13.322027104721627, 52.51773514881992),(13.321124828370177, 52.516709837521866),(13.323525466163757, 52.51597401976454),(13.324266491874166, 52.5169650913811),(13.322847600680866, 52.517782208350184)]
 
 # global api url
-# api_url = 'http://localhost:3000'
-api_url = 'http://192.168.42.24:3000'
+api_url = 'http://localhost:3000'
+# api_url = 'https://energymap-berlin.de/map'
 
 
 def get_response(url):
@@ -37,7 +37,7 @@ def get_response(url):
         return {}
 
 def by_uuid(uuid=test_uuid):
-    url = api_url + '/bldg/' + str(uuid)
+    url = '{}/query?mode=uuid&uuid={}'.format(api_url, uuid)
     print(url)
     return get_response(url)
 
@@ -53,7 +53,7 @@ def by_point(lon=test_lon, lat=test_lat, dist=0):
     :type dist: int
     :return: JSON response
     """
-    url = api_url + '/bldgbypoint/' + str(lon) + '&' + str(lat) + '&' + str(dist)
+    url = '{}/query?mode=point&longitude=${}&latitude=${}&distance=${}'.format(api_url, lon, lat, dist)
     # Print the URL to the console for debugging
     print(url)
     return get_response(url)
@@ -68,10 +68,11 @@ def by_line(line_points=test_line, dist=0):
     :type dist: int
     :return: JSON response
     """
-    url = f"{api_url}/bldgbyline/{dist}&"  # Add the URL parameters
+    url = f"{api_url}/query?mode=line&linestring="  # Add the URL parameters
     for point in line_points:  # Iterate over the line points
-        url += f"{point[0]}&{point[1]}&"  # Add the point coordinates to the URL
-    url = url[:-1]  # Remove the last '&' character
+        url += f"{point[0]},{point[1]},"  # Add the point coordinates to the URL
+    url = url[:-1]  # Remove the last ',' character
+    url += f"&distance={dist}"
     print(url)
     return get_response(url)
 
@@ -84,12 +85,12 @@ def by_polygon(polygon_points=test_poly):
     :return: JSON response
     """
     # Add the URL parameters
-    url = f"{api_url}/bldgbypolygon/"
+    url = f"{api_url}/query?mode=polygon&linestring="
     # Iterate over the polygon points
     for point in polygon_points:
         # Add the point coordinates to the URL
-        url += f"{point[0]}&{point[1]}&"
-    # Remove the last '&' character
+        url += f"{point[0]},{point[1]},"
+    # Remove the last ',' character
     url = url[:-1]
     # Print the URL to the console for debugging
     print(url)
