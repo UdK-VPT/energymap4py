@@ -9,8 +9,8 @@ test_line = [(13.324412829321979, 52.516957033745285),(13.322429034685205, 52.51
 test_poly = [(13.322027104721627, 52.51773514881992),(13.321124828370177, 52.516709837521866),(13.323525466163757, 52.51597401976454),(13.324266491874166, 52.5169650913811),(13.322847600680866, 52.517782208350184)]
 
 # global api url
-api_url = 'http://localhost:3000'
-# api_url = 'https://energymap-berlin.de/map'
+# api_url = 'http://localhost:3000'
+api_url = 'https://energymap-berlin.de/map'
 
 
 def get_response(url):
