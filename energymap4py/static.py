@@ -27,6 +27,8 @@ def get_response(url):
         r = requests.get(url)
         # Raise an exception for bad status codes (4xx or 5xx)
         r.raise_for_status()
+        if len(r.json()) > 249:
+            print('EnergyMap limits data requests to 250 buildings. Your request was truncated accordingly!')
         # Return the response as a JSON object
         return json.loads(r.text)
     # Handle exceptions
@@ -53,7 +55,7 @@ def by_point(lon=test_lon, lat=test_lat, dist=0):
     :type dist: int
     :return: JSON response
     """
-    url = '{}/query?mode=point&longitude=${}&latitude=${}&distance=${}'.format(api_url, lon, lat, dist)
+    url = '{}/query?mode=point&longitude={}&latitude={}&distance={}'.format(api_url, lon, lat, dist)
     # Print the URL to the console for debugging
     print(url)
     return get_response(url)
