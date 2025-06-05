@@ -1,3 +1,1 @@
-__version__ = "0.0.1"
-
-from .data_access import *
+__version__ = "0.42.0"
