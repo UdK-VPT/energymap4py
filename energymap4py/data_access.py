@@ -1,3 +1,10 @@
+"""
+data_access.py provides access to the EnergyMap Berlin publication database.
+Various funtions give provide different ways to select buildings.
+Possible is selection by uuid, by point and distance to point, by polyline or by polygon.
+All functions return a test dataset, when no arguments are given when calling the function.
+"""
+
 import requests
 import json
 
@@ -9,7 +16,6 @@ test_line = [(13.324412829321979, 52.516957033745285),(13.322429034685205, 52.51
 test_poly = [(13.322027104721627, 52.51773514881992),(13.321124828370177, 52.516709837521866),(13.323525466163757, 52.51597401976454),(13.324266491874166, 52.5169650913811),(13.322847600680866, 52.517782208350184)]
 
 # global api url
-# api_url = 'http://localhost:3000'
 api_url = 'https://energymap-berlin.de/map'
 
 
@@ -39,6 +45,13 @@ def get_response(url):
         return {}
 
 def by_uuid(uuid=test_uuid):
+    """
+    Calls the EnergyMap API to retrieve a building with the specified UUID.
+
+    :param uuid: UUID as defined in the Berlin ALKIS system
+    :type uuid: string
+    :return: JSON response
+    """
     url = '{}/query?mode=uuid&uuid={}'.format(api_url, uuid)
     print(url)
     return get_response(url)

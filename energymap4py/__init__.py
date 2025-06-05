@@ -1,3 +1,3 @@
 __version__ = "0.0.1"
 
-from .static import *
+from .data_access import *
