@@ -14,14 +14,16 @@ The figure shows a city district marked in the web app consisting of 72 building
 
 # Python API for EnergyMap - energymap4py
 
-The Python API enables access to the EnergyMap Berlin database server and the AI-based prognosis model for the heating demand predictions independent of the web app. For this purpose, we built a Python wrapper for the node.js API that is also used in the EnergyMap WebAPP.
+The Python API enables access to the EnergyMap Berlin database server and the AI-based prognosis model for the heating demand predictions independent of the web app. For this purpose, we built a Python wrapper for the node.js API that is also used in the EnergyMap web app.
 
-The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database. The part "ai_model" provides access to the AI-prognosis model for detailed paramerization of our EnergyMap AI building model.
+The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database. The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
 
-The following notebooks show possible applications for the Python API:
+The following notebooks show twi different possible applications for the Python API:
 
 * OSM.ipynb: the user can select a set of buildings within a map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergymMap database.
 
-![EnergyMap Berlin](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_PythonInterface.png)
+![EnergyMap Berlin Python Interface](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_PythonInterface.png)
 
 * PrognosisModel.ipynb: First, a building is selected from the EnergyMap database. Then, various parameters (input variables) of the building are changed (climate year, U-values of facades, windows, and roof) to analyze their impact on its annual heating demand. 
+
+![EnergyMap Berlin Prognosis Model](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_prognosis_model.png)
