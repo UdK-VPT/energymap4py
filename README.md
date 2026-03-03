@@ -6,7 +6,7 @@ The combination of calculated building-specific heat demand values based on publ
 
 More information about the EnergyMap Berlin project under https://energymap-berlin.de.
 
-The easiest way to access EnergyMap Berlin's building and energy demand data is to use the web app via the URL https://energymap-berlin/map:  
+The easiest way to access EnergyMap Berlin's building and energy demand data is to use the web app via the URL https://energymap-berlin.de/map:  
 
 ![EnergyMap Berlin](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin.png)
 
