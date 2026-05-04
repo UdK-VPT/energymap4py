@@ -44,6 +44,20 @@ def get_response(url):
         # Return an empty dictionary
         return {}
 
+def added_details_by_uuid(uuid=test_uuid):
+    """
+    Calls the EnergyMap API to retrieve a building's available geometry data
+    and additional performance data for the specified UUID.
+
+    :param uuid: UUID as defined in the Berlin ALKIS system
+    :type uuid: string
+    :return: JSON response
+    """
+
+    url = '{}/query?mode=modeldefault&uuids={}'.format(api_url, uuid)
+    print(url)
+    return get_response(url)
+
 def by_uuid(uuid=test_uuid):
     """
     Calls the EnergyMap API to retrieve a building with the specified UUID.
