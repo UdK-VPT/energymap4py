@@ -16,9 +16,15 @@ The figure shows a city district marked in the web app consisting of 72 building
 
 The Python API enables access to the EnergyMap Berlin database server and the AI-based prognosis model for the heating demand predictions independent of the web app. For this purpose, we built a Python wrapper for the node.js API that is also used in the EnergyMap web app.
 
-The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database. The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
+The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database.
 
-The following notebooks show twi different possible applications for the Python API:
+Functions do not only return the data that is published within the EnergyMap-Webapp but also make it possible to get plausible, more detailed building information as well as an 3D geometry packaged as a zipped CityGML file. 
+
+The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
+
+The Jupyter notebook example.ipynb shows the basic usage of this Python package.
+
+The following notebooks show two different possible applications for the Python API:
 
 * OSM.ipynb: the user can select a set of buildings within a map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergymMap database.
 
