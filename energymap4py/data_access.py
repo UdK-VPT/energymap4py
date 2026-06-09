@@ -101,7 +101,7 @@ def _add_optional_outputs(response, added_details=False, citygml=False, output_f
     for building in buildings:
         uuid = building.get("uuid")
         if added_details and uuid:
-            building["added_details"] = _first_response_item(added_details_by_uuid(uuid))
+            building.update(_first_response_item(added_details_by_uuid(uuid)))
         if citygml:
             building["citygml_file"] = citygml_file
 
