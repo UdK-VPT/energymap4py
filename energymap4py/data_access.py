@@ -7,6 +7,7 @@ All functions return a test dataset, when no arguments are given when calling th
 
 import requests
 import json
+from datetime import datetime
 
 # global test variables
 test_uuid = 'DEBE04YY500002vO'
@@ -58,19 +59,74 @@ def added_details_by_uuid(uuid=test_uuid):
     print(url)
     return get_response(url)
 
-def by_uuid(uuid=test_uuid):
+def _as_list(response):
+    """
+    Returns an API response as a list of building dictionaries.
+    """
+
+    if isinstance(response, list):
+        return response
+    if isinstance(response, dict) and response:
+        return [response]
+    return []
+
+def _extract_uuids(response):
+    """
+    Extracts building UUIDs from an API response.
+    """
+
+    return [building["uuid"] for building in _as_list(response) if "uuid" in building]
+
+def _first_response_item(response):
+    """
+    Returns the first item from a response list, or the response itself.
+    """
+
+    if isinstance(response, list):
+        return response[0] if response else {}
+    return response
+
+def _add_optional_outputs(response, added_details=False, citygml=False, output_file=None):
+    """
+    Adds optional per-building details and CityGML file access to an API response.
+    """
+
+    if not added_details and not citygml:
+        return response
+
+    buildings = _as_list(response)
+    uuids = _extract_uuids(buildings)
+    citygml_file = citygml_by_uuid(uuids, output_file=output_file) if citygml and uuids else None
+
+    for building in buildings:
+        uuid = building.get("uuid")
+        if added_details and uuid:
+            building["added_details"] = _first_response_item(added_details_by_uuid(uuid))
+        if citygml:
+            building["citygml_file"] = citygml_file
+
+    return response
+
+def by_uuid(uuid=test_uuid, added_details=False, citygml=False, output_file=None):
     """
     Calls the EnergyMap API to retrieve a building with the specified UUID.
 
     :param uuid: UUID as defined in the Berlin ALKIS system
     :type uuid: string
+    :param added_details: If True, add detailed building data to the response
+    :type added_details: bool
+    :param citygml: If True, download CityGML data and add the file path to the response
+    :type citygml: bool
+    :param output_file: Path where the CityGML file should be saved
+    :type output_file: str
     :return: JSON response
     """
     url = '{}/query?mode=uuid&uuid={}'.format(api_url, uuid)
     print(url)
-    return get_response(url)
+    response = get_response(url)
+    return _add_optional_outputs(response, added_details, citygml, output_file)
 
-def by_point(lon=test_lon, lat=test_lat, dist=0):
+def by_point(lon=test_lon, lat=test_lat, dist=0, added_details=False, citygml=False, output_file=None):
     """
     Calls the EnergyMap API to retrieve buildings near a point.
 
@@ -80,14 +136,21 @@ def by_point(lon=test_lon, lat=test_lat, dist=0):
     :type lat: float
     :param dist: Maximum distance from the point in meters
     :type dist: int
+    :param added_details: If True, add detailed building data to the response
+    :type added_details: bool
+    :param citygml: If True, download CityGML data and add the file path to the response
+    :type citygml: bool
+    :param output_file: Path where the CityGML file should be saved
+    :type output_file: str
     :return: JSON response
     """
     url = '{}/query?mode=point&longitude={}&latitude={}&distance={}'.format(api_url, lon, lat, dist)
     # Print the URL to the console for debugging
     print(url)
-    return get_response(url)
+    response = get_response(url)
+    return _add_optional_outputs(response, added_details, citygml, output_file)
 
-def by_line(line_points=test_line, dist=0):
+def by_line(line_points=test_line, dist=0, added_details=False, citygml=False, output_file=None):
     """
     Calls the EnergyMap API to retrieve buildings along a line.
 
@@ -95,6 +158,12 @@ def by_line(line_points=test_line, dist=0):
     :type line_points: list of (float, float)
     :param dist: Maximum distance from the line in meters
     :type dist: int
+    :param added_details: If True, add detailed building data to the response
+    :type added_details: bool
+    :param citygml: If True, download CityGML data and add the file path to the response
+    :type citygml: bool
+    :param output_file: Path where the CityGML file should be saved
+    :type output_file: str
     :return: JSON response
     """
     url = f"{api_url}/query?mode=line&linestring="  # Add the URL parameters
@@ -103,14 +172,21 @@ def by_line(line_points=test_line, dist=0):
     url = url[:-1]  # Remove the last ',' character
     url += f"&distance={dist}"
     print(url)
-    return get_response(url)
+    response = get_response(url)
+    return _add_optional_outputs(response, added_details, citygml, output_file)
 
-def by_polygon(polygon_points=test_poly):
+def by_polygon(polygon_points=test_poly, added_details=False, citygml=False, output_file=None):
     """
     Calls the EnergyMap API to retrieve buildings within a polygon.
 
     :param polygon_points: List of points defining the polygon
     :type polygon_points: list of (float, float)
+    :param added_details: If True, add detailed building data to the response
+    :type added_details: bool
+    :param citygml: If True, download CityGML data and add the file path to the response
+    :type citygml: bool
+    :param output_file: Path where the CityGML file should be saved
+    :type output_file: str
     :return: JSON response
     """
     # Add the URL parameters
@@ -124,4 +200,43 @@ def by_polygon(polygon_points=test_poly):
     # Print the URL to the console for debugging
     print(url)
     # Call the EnergyMap API and return the response
-    return get_response(url)
+    response = get_response(url)
+    return _add_optional_outputs(response, added_details, citygml, output_file)
+
+def citygml_by_uuid(ids, output_file=None):
+    """
+    Downloads a CityGML export file for the specified building UUIDs.
+
+    :param ids: UUIDs as defined in the Berlin ALKIS system
+    :type ids: list[str] or str
+    :param output_file: Path where the downloaded file should be saved.
+        If None, the filename is generated from the UUID or current date and time.
+    :type output_file: str
+    :return: Path to the downloaded file, or None if an error occurred
+    """
+
+    if isinstance(ids, str):
+        ids = [ids]
+
+    if output_file is None:
+        if len(ids) == 1:
+            output_file = f"{ids[0]}.zip"
+        else:
+            output_file = f"citygml_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
+
+    url = f"{api_url}/api/citygml/export/by-bldg-uuid"
+    params = [("ids", uuid) for uuid in ids]
+
+    try:
+        r = requests.get(url, params=params)
+        r.raise_for_status()
+
+        with open(output_file, "wb") as f:
+            f.write(r.content)
+
+        print(r.url)
+        return output_file
+
+    except requests.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
