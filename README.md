@@ -18,7 +18,7 @@ The Python API enables access to the EnergyMap Berlin database server and the AI
 
 The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database.
 
-Functions do not only return the data that is published within the EnergyMap-Webapp but also make it possible to get plausible, more detailed building information as well as an 3D geometry packaged as a zipped CityGML file. 
+Functions do not only return the data that is published within the EnergyMap-Webapp but also make it possible to get plausible, more detailed building information as well as an 3D geometry packaged as a zipped CityGML file. The functions support an optional filepath and name for the exports. Export directories must exist before.
 
 The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
 
