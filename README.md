@@ -16,20 +16,23 @@ The figure shows a city district marked in the web app consisting of 72 building
 
 The Python API enables access to the EnergyMap Berlin database server and the AI-based prognosis model for the heating demand predictions independent of the web app. For this purpose, we built a Python wrapper for the node.js API that is also used in the EnergyMap web app.
 
-The API is structured into two major parts: The "data_access" part refers to function that provide access to pre-computed data from the EnergyMap Database.
+The API is structured into two major parts: The "data_access" part refers to functions that provide access to pre-computed data from the EnergyMap Database.
 
 Functions do not only return the data that is published within the EnergyMap-Webapp but also make it possible to get plausible, more detailed building information as well as an 3D geometry packaged as a zipped CityGML file. The functions support an optional filepath and name for the exports. Export directories must exist before.
 
 The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
 
-The Jupyter notebook example.ipynb shows the basic usage of this Python package.
+The **notebook example.ipynb** shows the basic usage of the Python API:
 
-The following notebooks show two different possible applications for the Python API:
+* Exemplary usage of basic functions from the module data_access such as by_polygon(), by_line(), by_point() or by_uuid() to obtain data of an individual building or a larger number of buildings of the Berlin building stock (by setting citygml=True the citygml models of he selected buildings are downloaded in a zip file).
+* Exemplary usage of the ai prognosis model with the module ai_model and the function predict() to obtain the annual energy heating demand dependend on the input model parameters.
 
-* OSM.ipynb: the user can select a set of buildings within a map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergymMap database.
+The following two notebooks demonstrates two different possible applications for the Python API:
+
+* **OSM.ipynb**: the user can select a set of buildings within a map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergymMap database.
 
 ![EnergyMap Berlin Python Interface](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_PythonInterface.png)
 
-* PrognosisModel.ipynb: First, a building is selected from the EnergyMap database. Then, various parameters (input variables) of the building are changed (climate year, U-values of facades, windows, and roof) to analyze their impact on its annual heating demand. 
+* **PrognosisModel.ipynb**: First, a building is selected from the EnergyMap database. Then, various parameters (input variables) of the building are changed (climate year, U-values of facades, windows, and roof) to analyze their impact on its annual heating demand. 
 
 ![EnergyMap Berlin Prognosis Model](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_prognosis_model.png)
