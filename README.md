@@ -22,7 +22,7 @@ Functions do not only return the data that is published within the EnergyMap-Web
 
 The “ai_model” part provides access to the AI-based prognosis model for the building specific annual heating energy demand. Here, various input parameters (features) can be set for every building in Berlin selected via its UUID (universally unique identifier), such as the climate year or the U-values of its opaque facade, windows, or roof. 
 
-The **notebook example.ipynb** shows the basic usage of the Python API:
+The notebook **example.ipynb** shows the basic usage of the Python API:
 
 * Exemplary usage of basic functions from the module data_access such as by_polygon(), by_line(), by_point() or by_uuid() to obtain data of an individual building or a larger number of buildings of the Berlin building stock (by setting citygml=True the citygml models of he selected buildings are downloaded in a zip file).
 * Exemplary usage of the ai prognosis model with the module ai_model and the function predict() to obtain the annual energy heating demand dependend on the input model parameters.
