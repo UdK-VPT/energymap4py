@@ -36,3 +36,7 @@ The following two notebooks demonstrates two different possible applications for
 * **PrognosisModel.ipynb**: First, a building is selected from the EnergyMap database. Then, various parameters (input variables) of the building are changed (climate year, U-values of facades, windows, and roof) to analyze their impact on its annual heating demand. 
 
 ![EnergyMap Berlin Prognosis Model](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_prognosis_model.png)
+
+* **HeatLoadProfiles.ipynb**: First, an hourly heating load profile is generated for a single building, and then for a group of buildings, using data from the EnergyMap Berlin database. 
+
+![EnergyMap Berlin Heat load profiles](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_heatLoadProfiles.png)
