@@ -12,7 +12,7 @@ The easiest way to access EnergyMap Berlin's building and energy demand data is 
 
 The figure shows a city district marked in the web app consisting of 72 buildings for which a range of information, such as the total heated area or the total annual heating demand of all selected buildings, was determined for the standard scenario.  
 
-# Python API for EnergyMap - energymap4py
+# Python API for EnergyMap Berlin - energymap4py
 
 The Python API enables access to the EnergyMap Berlin database server and the AI-based prognosis model for the heating demand predictions independent of the web app. For this purpose, we built a Python wrapper for the node.js API that is also used in the EnergyMap web app.
 
