@@ -29,7 +29,7 @@ The notebook **example.ipynb** shows the basic usage of the Python API:
 
 The following two notebooks demonstrates two different possible applications for the Python API:
 
-* **OSM.ipynb**: the user can select a set of buildings within a map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergymMap database.
+* **OSM.ipynb**: The user can select a set of buildings within an OSM based map using a polyline or polygon tool and obtain values for building parameters and precalculated building energy demands from the EnergyMap database. Furthermore, the total heating load for a specified period is determined for the selected buildings, as well as the ordered time series for heat demand and electricity demand for a near-surface geothermal heating system.  
 
 ![EnergyMap Berlin Python Interface](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_PythonInterface.png)
 
@@ -37,6 +37,6 @@ The following two notebooks demonstrates two different possible applications for
 
 ![EnergyMap Berlin Prognosis Model](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_prognosis_model.png)
 
-* **HeatLoadProfiles.ipynb**: First, an hourly heating load profile is generated for a single building, and then for a group of buildings, using data from the EnergyMap Berlin database. 
+* **HeatLoadProfiles.ipynb**: Hourly heating load profiles can be generated for single buildings, and also for groups of buildings, using data from the EnergyMap Berlin database and a heat load profile algorithm. 
 
 ![EnergyMap Berlin Heat load profiles](https://github.com/UdK-VPT/energymap4py/blob/main/img/EnergyMap_Berlin_heatLoadProfiles.png)
